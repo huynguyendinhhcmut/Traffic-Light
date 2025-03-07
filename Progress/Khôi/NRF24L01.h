@@ -10,16 +10,16 @@
 
 
 
-void NRF24_Init (void);
+void nrf24_init (void);
 
-void NRF24_TxMode (uint8_t *Address, uint8_t channel);
+void nrf24_TxMode (uint8_t *Address, uint8_t channel);
 uint8_t NRF24_Transmit (uint8_t *data);
 
-void NRF24_RxMode (uint8_t *Address, uint8_t channel);
+void nrf24_RxMode (uint8_t *Address, uint8_t channel);
 uint8_t isDataAvailable (int pipenum);
-void NRF24_Receive (uint8_t *data);
+void nrf24_Receive (uint8_t *data);
 
-void NRF24_ReadAll (uint8_t *data);
+void nrf24_ReadAll (uint8_t *data);
 
 /* Memory Map */
 #define CONFIG      0x00
