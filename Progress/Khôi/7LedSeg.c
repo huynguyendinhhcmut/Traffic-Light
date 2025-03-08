@@ -14,7 +14,9 @@ PB13 (SCK_PIN)				|	Pin 11 (SH_CP)		|	Shift Clock
 PB12 (NSS_PIN)				|	Pin 12 (ST_CP)		|	Latch Clock (to update output)
 Optional: PB10 (MOSI_PIN)	|	Pin 10 (MR)			|	Master Reset (tie to VCC if not used)
 GND							|	Pin 13 (OE)			|	Output Enable (active low, tie to GND)
+PB14 (MISO_PIN)				|	Select Pin of 7LED	|	Choose which LED is ON
  */
+
 
 
 
@@ -114,7 +116,29 @@ void countDownNum(uint8_t number){
 }
 
 
-// Function to display traffic light
+
+// Function to control light mode
+void turnOnRed() {
+    HAL_GPIO_WritePin(RED_LIGHT_PORT, RED_LIGHT_PIN, GPIO_PIN_SET);    			// RED 		ON
+    HAL_GPIO_WritePin(YELLOW_LIGHT_PORT, YELLOW_LIGHT_PIN, GPIO_PIN_RESET);		// YELLOW 	OFF
+    HAL_GPIO_WritePin(GREEN_LIGHT_PORT, GREEN_LIGHT_PIN, GPIO_PIN_RESET);		// GREEN 	OFF
+}
+void turnOnYellow() {
+    HAL_GPIO_WritePin(RED_LIGHT_PORT, RED_LIGHT_PIN, GPIO_PIN_RESET);			// RED 		OFF
+    HAL_GPIO_WritePin(YELLOW_LIGHT_PORT, YELLOW_LIGHT_PIN, GPIO_PIN_SET);  		// Yellow 	ON
+    HAL_GPIO_WritePin(GREEN_LIGHT_PORT, GREEN_LIGHT_PIN, GPIO_PIN_RESET);		// GREEN 	OFF
+}
+void turnOnGreen() {
+    HAL_GPIO_WritePin(RED_LIGHT_PORT, RED_LIGHT_PIN, GPIO_PIN_RESET);			// RED 		OFF
+    HAL_GPIO_WritePin(YELLOW_LIGHT_PORT, YELLOW_LIGHT_PIN, GPIO_PIN_RESET);		// YELLOW 	OFF
+    HAL_GPIO_WritePin(GREEN_LIGHT_PORT, GREEN_LIGHT_PIN, GPIO_PIN_SET);    		// Green 	ON
+}
+
+
+
+
+
+// Function to display traffic light in certain time
 /*
  * Input Counting value
  *
@@ -135,10 +159,13 @@ void traficDisplay(uint8_t number){
 	uint8_t red_time = number;			// Red light duration
 
 	// Green Light
+	turnOnGreen();
 	countDownNum(green_time);
 	// Yellow Light
+	turnOnYellow();
 	countDownNum(yellow_time);
 	// Red Light
+	turnOnRed();
 	countDownNum(red_time);
 }
 
