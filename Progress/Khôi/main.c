@@ -63,7 +63,7 @@ static void MX_SPI2_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-uint8_t TxAddress[] = {0x00,0xDD,0xCC,0xBB,0xAA};
+// uint8_t TxAddress[] = {0x00,0xDD,0xCC,0xBB,0xAA};
 
 
 
@@ -109,6 +109,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   nrf24_init();
+  initializeSPI();
 
   HAL_GPIO_WritePin(RED_LIGHT_PORT, RED_LIGHT_PIN, GPIO_PIN_SET);    			// RED 		ON
 
@@ -120,7 +121,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  traficDisplay(15);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

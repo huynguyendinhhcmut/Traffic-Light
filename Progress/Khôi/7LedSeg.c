@@ -9,12 +9,11 @@
 /*
 STM32 Pin (GPIOB)			|	74HC595 Pin			|	Description
 ---------------------------------------------------------------------------------------------
-PB15 (MOSI_PIN)				|	Pin 14 (DS)			|	Data Input
+PB15 (MOSI_PIN)				|	Pin 14 (DS)			|	Data Output
 PB13 (SCK_PIN)				|	Pin 11 (SH_CP)		|	Shift Clock
 PB12 (NSS_PIN)				|	Pin 12 (ST_CP)		|	Latch Clock (to update output)
 Optional: PB10 (MOSI_PIN)	|	Pin 10 (MR)			|	Master Reset (tie to VCC if not used)
 GND							|	Pin 13 (OE)			|	Output Enable (active low, tie to GND)
-PB14 (MISO_PIN)				|	Select Pin of 7LED	|	Choose which LED is ON
  */
 
 
@@ -68,17 +67,17 @@ void initializeSPI(void) {
 
 // Function to clear the shift register
 void clearShiftRegister(void) {
-    uint8_t clearData = 0x00;  // Send 0 to clear
-    HAL_SPI_Transmit(SEVEN_LED_SEG_SPI, &clearData, 1, HAL_MAX_DELAY);
-}
+    uint8_t clearData = 0x00;  				// Send 0 to clear
+	shiftOut(clearData);    				// End transmission (latch high)
+    }
 
 
 
 // Function to send data to the shift register via SPI
 void shiftOut(uint8_t data) {
-    HAL_GPIO_WritePin(NSS_PORT, NSS_PIN, GPIO_PIN_RESET);  // Pull NSS low to start transmission
-    HAL_SPI_Transmit(SEVEN_LED_SEG_SPI, &data, 1, HAL_MAX_DELAY);  // Send data
-    HAL_GPIO_WritePin(NSS_PORT, NSS_PIN, GPIO_PIN_SET);    // Pull NSS high to end transmission
+    HAL_GPIO_WritePin(NSS_PORT, NSS_PIN, GPIO_PIN_RESET);  				// Pull NSS low to start transmission
+    HAL_SPI_Transmit(SEVEN_LED_SEG_SPI, &data, 1, HAL_MAX_DELAY);  		// Send data
+    HAL_GPIO_WritePin(NSS_PORT, NSS_PIN, GPIO_PIN_SET);    				// Pull NSS high to end transmission
 }
 
 
@@ -92,15 +91,11 @@ void displayNumber(uint8_t number) {
     uint8_t units = number % 10;     	// Extract units digit
 
     // Send tens digit to first 7-segment display
-    HAL_GPIO_WritePin(NSS_PORT, NSS_PIN, GPIO_PIN_RESET);  // Start transmission
-    HAL_SPI_Transmit(SEVEN_LED_SEG_SPI, &digitCodes[tens], 1, HAL_MAX_DELAY);
-    HAL_GPIO_WritePin(NSS_PORT, NSS_PIN, GPIO_PIN_SET);    // End transmission
+    shiftOut(digitCodes[units]);
     HAL_Delay(5);  // Small delay to stabilize display
 
     // Send units digit to second 7-segment display
-    HAL_GPIO_WritePin(NSS_PORT, NSS_PIN, GPIO_PIN_RESET);  // Start transmission
-    HAL_SPI_Transmit(SEVEN_LED_SEG_SPI, &digitCodes[units], 1, HAL_MAX_DELAY);
-    HAL_GPIO_WritePin(NSS_PORT, NSS_PIN, GPIO_PIN_SET);    // End transmission
+    shiftOut(digitCodes[tens]);
     HAL_Delay(5);  // Small delay to stabilize display
 }
 
@@ -110,9 +105,9 @@ void displayNumber(uint8_t number) {
 void countDownNum(uint8_t number){
 	// Loop displaying number
 	for (uint8_t i = number; i >= 0; i--) {
-	            displayNumber(i);      	// Display xx to 00
-	            HAL_Delay(1000);        // delay 1s
-	        }
+		displayNumber(i);      	// Display xx to 00
+		HAL_Delay(1000);        // delay 1s
+		}
 }
 
 

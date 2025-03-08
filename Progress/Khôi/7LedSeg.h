@@ -36,7 +36,7 @@
 
 
 // Define functions
-void initializePorts(void);
+void initializeSPI(void);
 void clearShiftRegister(void);
 void shiftOut(uint8_t data);
 void displayNumber(uint8_t number);
