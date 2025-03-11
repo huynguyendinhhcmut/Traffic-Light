@@ -29,16 +29,16 @@ extern SPI_HandleTypeDef hspi2;
 // Numbers
 
 const uint8_t digitCodes[10] = {
-    0x3F,  // 0 -> 0b00111111
-    0x06,  // 1 -> 0b00000110
-    0x5B,  // 2 -> 0b01011011
-    0x4F,  // 3 -> 0b01001111
-    0x66,  // 4 -> 0b01100110
-    0x6D,  // 5 -> 0b01101101
-    0x7D,  // 6 -> 0b01111101
-    0x07,  // 7 -> 0b00000111
-    0x7F,  // 8 -> 0b01111111
-    0x6F   // 9 -> 0b01101111
+    ~0x3F,  // 0 -> 0b00111111
+    ~0x06,  // 1 -> 0b00000110
+    ~0x5B,  // 2 -> 0b01011011
+    ~0x4F,  // 3 -> 0b01001111
+    ~0x66,  // 4 -> 0b01100110
+    ~0x6D,  // 5 -> 0b01101101
+    ~0x7D,  // 6 -> 0b01111101
+    ~0x07,  // 7 -> 0b00000111
+    ~0x7F,  // 8 -> 0b01111111
+    ~0x6F   // 9 -> 0b01101111
 };
 
 
@@ -104,7 +104,7 @@ void displayNumber(uint8_t number) {
 // Function to CountDown number
 void countDownNum(uint8_t number){
 	// Loop displaying number
-	for (uint8_t i = number; i >= 0; i--) {
+	for (int8_t i = number; i >= 0; i--) {
 		displayNumber(i);      	// Display xx to 00
 		HAL_Delay(1000);        // delay 1s
 		}

@@ -111,7 +111,7 @@ int main(void)
   nrf24_init();
   initializeSPI();
 
-  HAL_GPIO_WritePin(RED_LIGHT_PORT, RED_LIGHT_PIN, GPIO_PIN_SET);    			// RED 		ON
+
 
 
   /* USER CODE END 2 */
@@ -123,6 +123,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	traficDisplay(15);
   }
   /* USER CODE END 3 */
 }
