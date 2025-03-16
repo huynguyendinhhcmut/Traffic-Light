@@ -1,0 +1,10 @@
+../Core/Src/main.c:74:5:main	1
+../Core/Src/main.c:119:6:SystemClock_Config	3
+../Core/Src/main.c:156:13:MX_GPIO_Init	1
+../Core/Src/main.c:196:9:isButtonPressed	4
+../Core/Src/main.c:211:6:updateState	5
+../Core/Src/main.c:231:6:switchToLightTrafficMode	1
+../Core/Src/main.c:238:6:switchToHeavyTrafficMode	1
+../Core/Src/main.c:245:6:switchToNightMode	1
+../Core/Src/main.c:252:6:switchToControlMode	1
+../Core/Src/main.c:264:6:Error_Handler	1
