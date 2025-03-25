@@ -255,7 +255,7 @@ void updateState(void)
     	if (light_mode_flag) {switchToLightTrafficMode();}
     	else if (heavy_mode_flag) {switchToHeavyTrafficMode();}
     	else if (night_mode_flag) {switchToNightMode();}
-    	else if (control_mode_flag) {switchToControlMode;}
+    	else if (control_mode_flag) {switchToControlMode();}
     }
 }
 
