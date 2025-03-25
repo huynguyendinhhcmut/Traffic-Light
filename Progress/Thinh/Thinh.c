@@ -51,6 +51,10 @@ typedef enum {
 
 /* USER CODE BEGIN PV */
 TrafficLightMode currentMode = LIGHT_TRAFFIC_MODE;
+volatile uint8_t light_mode_flag = 0;
+volatile uint8_t heavy_mode_flag = 0;
+volatile uint8_t night_mode_flag = 0;
+volatile uint8_t control_mode_flag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -212,21 +216,46 @@ void updateState(void)
 {
     if (isButtonPressed(GPIOB, GPIO_PIN_5))
     {
-        switchToLightTrafficMode();
+    	light_mode_flag = 1;
+    	heavy_mode_flag = 0;
+    	night_mode_flag = 0;
+    	control_mode_flag = 0;
+    	//trans_nRF();
+        //switchToLightTrafficMode();
     }
     else if (isButtonPressed(GPIOB, GPIO_PIN_6))
     {
-    	trans_nRF(heavy_mode);
-        switchToHeavyTrafficMode();
+    	light_mode_flag = 0;
+    	heavy_mode_flag = 1;
+    	night_mode_flag = 0;
+    	control_mode_flag = 0;
+    	//trans_nRF(heavy_mode);
+        //switchToHeavyTrafficMode();
     }
     else if (isButtonPressed(GPIOB, GPIO_PIN_7))
     {
-    	trans_nRF(night_mode);
-        switchToNightMode();
+    	light_mode_flag = 0;
+    	heavy_mode_flag = 0;
+    	night_mode_flag = 1;
+    	control_mode_flag = 0;
+    	//trans_nRF(night_mode);
+        //switchToNightMode();
     }
     else if (isButtonPressed(GPIOB, GPIO_PIN_8))
     {
-        switchToControlMode();
+    	light_mode_flag = 0;
+    	heavy_mode_flag = 0;
+    	night_mode_flag = 0;
+    	control_mode_flag = 1;
+    	//trans_nRF();
+        //switchToControlMode();
+    }
+    else if ((isButtonPressed(GPIOB, GPIO_PIN_5) == 0) && (isButtonPressed(GPIOB, GPIO_PIN_6) == 0) && (isButtonPressed(GPIOB, GPIO_PIN_7) == 0) && (isButtonPressed(GPIOB, GPIO_PIN_8) == 0))
+    {
+    	if (light_mode_flag) {switchToLightTrafficMode();}
+    	else if (heavy_mode_flag) {switchToHeavyTrafficMode();}
+    	else if (night_mode_flag) {switchToNightMode();}
+    	else if (control_mode_flag) {switchToControlMode;}
     }
 }
 
@@ -237,33 +266,36 @@ void switchToLightTrafficMode(void)
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_RESET);
 }
 
-void switchToHeavyTrafficMode(void)
-{
-    currentMode = HEAVY_TRAFFIC_MODE;
-    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_2);	// Nhấp nháy đèn vàng PB2
-    HAL_Delay(1000);
-}
-
 void switchToNightMode(void)
 {
     currentMode = NIGHT_MODE;
+    uint32_t Timer_1 = HAL_GetTick();
+    if (HAL_GetTick() - Timer_1 >= 1000) {
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);	// Nhấp nháy đèn vàng PB2
+    Timer_1 = HAL_GetTick();
+    }
+}
+
+void switchToHeavyTrafficMode(void)
+{
+    currentMode = HEAVY_TRAFFIC_MODE;
     static uint32_t mode_timer =0;
     mode_timer++;
 
     if (mode_timer < 60000) {
     	// 60s đèn xanh sáng
-    	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-    	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1|GPIO_PIN_2, GPIO_PIN_RESET);
+    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
     }
-    else if (mode_timer < 70000) {
+    else if (mode_timer >= 60000 && mode_timer < 70000) {
     	// 10s đèn vàng sáng
-    	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2, GPIO_PIN_SET);
-    	HAL_GPIOWritePin(GPIOB, GPIO_PIN_1|GPIO_PIN_3, GPIO_PIN_RESET);
+    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_10, GPIO_PIN_RESET);
     }
-    else if (mode_timer < 140000) {
+    else if (mode_timer >= 70000 && mode_timer < 140000) {
     	// 70s đèn đỏ sáng
-    	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
-    	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_RESET);
+    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9|GPIO_PIN_10, GPIO_PIN_RESET);
     }
 
     if (mode_timer >= 140000) {
@@ -274,8 +306,7 @@ void switchToNightMode(void)
 void switchToControlMode(void)
 {
     currentMode = CONTROL_MODE;
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);    // Bật LED cho CONTROL_MODE (PB2)
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2, GPIO_PIN_RESET);
+
 }
 /* USER CODE END 4 */
 
