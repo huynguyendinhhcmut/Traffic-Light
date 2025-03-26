@@ -190,7 +190,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-uint8_t isButtonPressed(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+/*uint8_t isButtonPressed(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 {
     if (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_RESET)
     {
@@ -203,7 +203,27 @@ uint8_t isButtonPressed(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
         }
     }
     return 0;
+}*/
+
+uint8_t isButtonPressed(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+{
+    static uint32_t lastDebounceTime = 0;
+    uint32_t debounceDelay = 50; // Thời gian debounce 50ms
+
+    if (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_RESET)
+    {
+        uint32_t currentTime = HAL_GetTick();
+        if ((currentTime - lastDebounceTime) >= debounceDelay)
+        {
+            lastDebounceTime = currentTime;
+            // Đợi cho đến khi nút được thả ra
+            while (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_RESET);
+            return 1;
+        }
+    }
+    return 0;
 }
+
 
 void updateState(void)
 {
