@@ -36,10 +36,7 @@ typedef enum {
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define light_traffic_mode 0x0001	// One-hot code for Light Traffic Mode
-#define heavy_mode 0x0010			// One-hot code for Heavy Mode
-#define night_mode 0x0100			// One-hot code for Night Mode
-#define control_mode 0x1000			// One-hot code for Control Mode
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,7 +48,7 @@ typedef enum {
 
 /* USER CODE BEGIN PV */
 TrafficLightMode currentMode = LIGHT_TRAFFIC_MODE;
-volatile uint8_t light_mode_flag = 0;
+volatile uint8_t normal_mode_flag = 1;
 volatile uint8_t heavy_mode_flag = 0;
 volatile uint8_t night_mode_flag = 0;
 volatile uint8_t control_mode_flag = 0;
@@ -167,26 +164,24 @@ static void MX_GPIO_Init(void)
   /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PB0 PB1 PB2 PB3 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;
+  /*Configure GPIO pins : PA8 PA9 PA10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB10 PB11 */
-  GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : PB5 PB6 PB7 PB8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8;
+  /*Configure GPIO pins : PB5 PB6 PB7 PB8
+                           PB9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8
+                          |GPIO_PIN_9;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
@@ -197,7 +192,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-uint8_t isButtonPressed(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+/*uint8_t isButtonPressed(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 {
     if (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_RESET)
     {
@@ -210,49 +205,64 @@ uint8_t isButtonPressed(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
         }
     }
     return 0;
+}*/
+
+uint8_t isButtonPressed(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+{
+    static uint32_t lastDebounceTime = 0;
+    uint32_t debounceDelay = 50; // Thời gian debounce 50ms
+
+    if (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_RESET)
+    {
+        uint32_t currentTime = HAL_GetTick();
+        if ((currentTime - lastDebounceTime) >= debounceDelay)
+        {
+            lastDebounceTime = currentTime;
+            // Đợi cho đến khi nút được thả ra
+            while (HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_RESET);
+            return 1;
+        }
+    }
+    return 0;
 }
+
 
 void updateState(void)
 {
     if (isButtonPressed(GPIOB, GPIO_PIN_5))
     {
-    	light_mode_flag = 1;
+    	normal_mode_flag = 1;
     	heavy_mode_flag = 0;
     	night_mode_flag = 0;
     	control_mode_flag = 0;
-    	//trans_nRF();
-        //switchToLightTrafficMode();
+        switchToLightTrafficMode();
     }
     else if (isButtonPressed(GPIOB, GPIO_PIN_6))
     {
-    	light_mode_flag = 0;
+    	normal_mode_flag = 0;
     	heavy_mode_flag = 1;
     	night_mode_flag = 0;
     	control_mode_flag = 0;
-    	//trans_nRF(heavy_mode);
-        //switchToHeavyTrafficMode();
+        switchToHeavyTrafficMode();
     }
     else if (isButtonPressed(GPIOB, GPIO_PIN_7))
     {
-    	light_mode_flag = 0;
+    	normal_mode_flag = 0;
     	heavy_mode_flag = 0;
     	night_mode_flag = 1;
     	control_mode_flag = 0;
-    	//trans_nRF(night_mode);
-        //switchToNightMode();
+        switchToNightMode();
     }
     else if (isButtonPressed(GPIOB, GPIO_PIN_8))
     {
-    	light_mode_flag = 0;
+    	normal_mode_flag = 0;
     	heavy_mode_flag = 0;
     	night_mode_flag = 0;
     	control_mode_flag = 1;
-    	//trans_nRF();
-        //switchToControlMode();
+        switchToControlMode();
     }
-    else if ((isButtonPressed(GPIOB, GPIO_PIN_5) == 0) && (isButtonPressed(GPIOB, GPIO_PIN_6) == 0) && (isButtonPressed(GPIOB, GPIO_PIN_7) == 0) && (isButtonPressed(GPIOB, GPIO_PIN_8) == 0))
-    {
-    	if (light_mode_flag) {switchToLightTrafficMode();}
+    else if ((isButtonPressed(GPIOB, GPIO_PIN_5) == 0) && (isButtonPressed(GPIOB, GPIO_PIN_6) == 0) && (isButtonPressed(GPIOB, GPIO_PIN_7) == 0)  && (isButtonPressed(GPIOB, GPIO_PIN_8) == 0)) {
+    	if (normal_mode_flag) {switchToLightTrafficMode();}
     	else if (heavy_mode_flag) {switchToHeavyTrafficMode();}
     	else if (night_mode_flag) {switchToNightMode();}
     	else if (control_mode_flag) {switchToControlMode();}
@@ -262,51 +272,92 @@ void updateState(void)
 void switchToLightTrafficMode(void)
 {
     currentMode = LIGHT_TRAFFIC_MODE;
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_SET);    // Bật LED cho LIGHT_TRAFFIC_MODE (PB0)
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_RESET);
-}
-
-void switchToNightMode(void)
-{
-    currentMode = NIGHT_MODE;
-    uint32_t Timer_1 = HAL_GetTick();
-    if (HAL_GetTick() - Timer_1 >= 1000) {
-    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);	// Nhấp nháy đèn vàng PB2
-    Timer_1 = HAL_GetTick();
+ /*   static uint32_t mode_timer = 0;
+    for (mode_timer=0; mode_timer < 60000; mode_timer ++) {
+    	if (mode_timer < 20000) {
+    		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+    		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
+    	}
+    	else if (mode_timer >= 20000 && mode_timer <30000) {
+    		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+    		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_10, GPIO_PIN_RESET);
+    	}
+    	else if (mode_timer >= 30000 && mode_timer < 60000) {
+    		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+    		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9|GPIO_PIN_10, GPIO_PIN_RESET);
+    	}
     }
+*/
+    // Reset mode_timer mỗi lần gọi hàm
+        uint32_t startTime = HAL_GetTick();  // Lấy thời gian bắt đầu
+
+        // Đèn xanh sáng trong 20 giây
+        while (HAL_GetTick() - startTime < 20000) {
+            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);  // Bật đèn xanh PA10
+            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8 | GPIO_PIN_9, GPIO_PIN_RESET);  // Tắt PA8 và PA9
+        }
+
+        // Sau khi 2 giây, đèn vàng sáng trong 10 giây
+        startTime = HAL_GetTick();  // Cập nhật lại thời gian bắt đầu
+        while (HAL_GetTick() - startTime < 10000) {
+            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);  // Bật đèn vàng PA9
+            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8 | GPIO_PIN_10, GPIO_PIN_RESET);  // Tắt PA8 và PA10
+        }
+
+        // Sau 3 giây, đèn đỏ sáng trong 30 giây
+        startTime = HAL_GetTick();  // Cập nhật lại thời gian bắt đầu
+        while (HAL_GetTick() - startTime < 30000) {
+            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);  // Bật đèn đỏ PA8
+            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9 | GPIO_PIN_10, GPIO_PIN_RESET);  // Tắt PA9 và PA10
+        }
 }
 
 void switchToHeavyTrafficMode(void)
 {
     currentMode = HEAVY_TRAFFIC_MODE;
-    static uint32_t mode_timer =0;
-    mode_timer++;
 
-    if (mode_timer < 60000) {
-    	// 60s đèn xanh sáng
+    uint32_t mode_timer = HAL_GetTick();
+    while (HAL_GetTick() - mode_timer < 60000) {
+    	// 60s đèn xanh
     	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
     	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
     }
-    else if (mode_timer >= 60000 && mode_timer < 70000) {
-    	// 10s đèn vàng sáng
+
+    mode_timer = HAL_GetTick();
+    while (HAL_GetTick() - mode_timer < 10000) {
+    	// 10s đèn vàng
     	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
     	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_10, GPIO_PIN_RESET);
     }
-    else if (mode_timer >= 70000 && mode_timer < 140000) {
-    	// 70s đèn đỏ sáng
+
+    mode_timer = HAL_GetTick();
+    while (HAL_GetTick() - mode_timer < 70000) {
+    	// 70s đèn đỏ
     	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
     	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9|GPIO_PIN_10, GPIO_PIN_RESET);
     }
+}
 
-    if (mode_timer >= 140000) {
-    	mode_timer = 0;
+void switchToNightMode(void)
+{
+    currentMode = NIGHT_MODE;
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_10, GPIO_PIN_RESET);
+    uint32_t time_now = HAL_GetTick();
+    while (HAL_GetTick() - time_now < 1000) {
+    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
+    }
+
+    time_now = HAL_GetTick();
+    while (HAL_GetTick() - time_now < 1000) {
+        HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET);
     }
 }
 
 void switchToControlMode(void)
 {
     currentMode = CONTROL_MODE;
-
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);    // Bật LED cho CONTROL_MODE (PA8)
+    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9|GPIO_PIN_10, GPIO_PIN_RESET);
 }
 /* USER CODE END 4 */
 
