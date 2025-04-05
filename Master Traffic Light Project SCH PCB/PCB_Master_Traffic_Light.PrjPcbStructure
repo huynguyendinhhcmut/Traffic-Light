@@ -1,0 +1,3 @@
+Record=TopLevelDocument|FileName=PCB_Master_Traffic_Light.SchDoc|SheetNumber=1
+Record=NoMainPathDocument|SourceDocument=PCB_Master_Traffic_Light.SchDoc|FileName=PCB_Master_Traffic_Light_BLOCK_DIAGRAM.SchDoc|SheetNumber=3
+Record=NoMainPathDocument|SourceDocument=PCB_Master_Traffic_Light.SchDoc|FileName=PCB_Master_Traffic_Light_COVER_PAGE.SchDoc|SheetNumber=2
