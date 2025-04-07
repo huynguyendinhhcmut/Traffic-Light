@@ -374,7 +374,7 @@ void detect_button(void)
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_15, GPIO_PIN_RESET);
 	}
-    else if (isButtonPressed(GPIOB, GPIO_PIN_9)) {
+    else if (isButtonPressed(GPIOB, GPIO_PIN_9) && control_mode_flag) {
     	normal_mode_flag = 0;
     	heavy_mode_flag = 0;
     	night_mode_flag = 0;
