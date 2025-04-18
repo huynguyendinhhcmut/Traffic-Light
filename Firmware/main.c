@@ -23,6 +23,8 @@
 /* USER CODE BEGIN Includes */
 #include "7LedSeg.h"
 #include "i2c-lcd.h"
+#include <stdio.h>
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +49,7 @@ typedef struct {
 
 Time time;
 
-char buffer[15];
+char buffer[20];
 
 
 #define DS3231_ADDRESS 0x68 << 1
@@ -110,6 +112,9 @@ void switchToLightTrafficMode(void);
 void switchToHeavyTrafficMode(void);
 void switchToControlMode(void);
 void switchToNightMode(void);
+void DS3231_Enable_Alarm1_OncePerSecond(I2C_HandleTypeDef *hi2c);
+void detect_button(void);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -421,8 +426,6 @@ void updateState(void)
 
 void detect_button(void)
 {
-	//Get_Time();
-
 	if (isButtonPressed(GPIOB, GPIO_PIN_5) || (min == 4)) {
 		normal_mode_flag = 1;
 		heavy_mode_flag = 0;
@@ -431,6 +434,7 @@ void detect_button(void)
 		lastbutton = 0;
 		direction = 0;
 		min = 0;
+
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
 	}
@@ -442,6 +446,7 @@ void detect_button(void)
 		lastbutton = 0;
 		direction = 0;
 		min = 0;
+
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
 	}
@@ -453,6 +458,7 @@ void detect_button(void)
 		lastbutton = 0;
 		direction = 0;
 		min = 0;
+
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_13, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
 	}
@@ -464,21 +470,24 @@ void detect_button(void)
 		lastbutton = 0;
 		direction = 0;
 		min = 0;
+
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_15, GPIO_PIN_RESET);
 	}
 	else if (isButtonPressed(GPIOB, GPIO_PIN_9) && control_mode_flag) {
-    		normal_mode_flag = 0;
-    		heavy_mode_flag = 0;
-    		night_mode_flag = 0;
-    		control_mode_flag = 1;
-    		lastbutton = 1;
-    		direction = ~direction;
-		min = 0;
-    		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_SET);
-    		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14, GPIO_PIN_RESET);
+    	normal_mode_flag = 0;
+    	heavy_mode_flag = 0;
+    	night_mode_flag = 0;
+    	control_mode_flag = 1;
+    	lastbutton = 1;
+    	direction = ~direction;
+    	min = 0;
+
+    	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_15, GPIO_PIN_SET);
+    	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14, GPIO_PIN_RESET);
     	}
 }
+
 
 void switchToLightTrafficMode(void)
 {
@@ -605,23 +614,7 @@ void switchToControlMode(void)
     			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
     			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9|GPIO_PIN_10, GPIO_PIN_RESET);
     			countDownNum(8);
-    			//detect_button();
     		}
-/*
-    		start_time = HAL_GetTick();
-    		while (HAL_GetTick() - start_time < 3000) {
-    			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
-    			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_10, GPIO_PIN_RESET);
-    			countDownNum(3);
-    			//detect_button();
-    		}
-*/
-/*
-    		while (direction == 0) {
-    			detect_button();
-    			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-    			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
-    		}*/
     	}
 
     	else if (direction != 0) {
@@ -632,7 +625,6 @@ void switchToControlMode(void)
     	    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
     	    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
     	    	countDownNum(5);
-    	    	//detect_button();
     	    }
 
     	    start_time = HAL_GetTick();
@@ -640,14 +632,7 @@ void switchToControlMode(void)
     	    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET);
     	    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8|GPIO_PIN_10, GPIO_PIN_RESET);
     	    	countDownNum(3);
-    	    	//detect_button();
     	    }
-/*
-    	    while (direction != 0) {
-    	    	detect_button();
-    	    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-    	    	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9|GPIO_PIN_10, GPIO_PIN_RESET);
-    	    }*/
     	}
     }
 }
@@ -738,15 +723,26 @@ UNUSED(GPIO_Pin);
     // Get time and update to LCD
 	Get_Time();
 
-	if(time.minutes == 38){
-		min = 1;
-	}
-	else if(time.minutes == 40) {
-		min = 2;
-	}
-	else if(time.minutes == 42) {
-		min = 4;
-	}
+	static uint8_t last_minute = 255; 					// Track the last minute to detect changes
+	        if (time.minutes != last_minute) 			// Only process when minute changes
+	        {
+	            if (time.minutes == 14) {
+	                min = 1; 									// Triggers NIGHT_MODE
+	                detect_button(); 							// Trigger mode change
+	                min = 0; 									// Reset min to prevent repeated triggers
+	            } else if (time.minutes == 16) {
+	                min = 2; 									// Triggers HEAVY_TRAFFIC_MODE
+	                detect_button();
+	                min = 0;
+	            } else if (time.minutes == 19) {
+	                min = 4; 									// Triggers LIGHT_TRAFFIC_MODE
+	                detect_button();
+	                min = 0;
+	            }
+	            last_minute = time.minutes; 					// Update last minute
+	        }
+
+
 
 	//lcd_clear();
 	sprintf (buffer, "%02d:%02d:%02d", time.hour, time.minutes, time.seconds);
