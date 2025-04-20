@@ -67,23 +67,6 @@ GenerateClassCluster=0
 DocumentUniqueId=WQSXSIZM
 
 [Document2]
-DocumentPath=PCB_Master_Traffic_Light.PcbDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=0
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=XHOLMULE
-
-[Document3]
 DocumentPath=PCB_Master_Traffic_Light_COVER_PAGE.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -100,7 +83,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=XUQFJHUW
 
-[Document4]
+[Document3]
 DocumentPath=PCB_Master_Traffic_Light_BLOCK_DIAGRAM.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -116,6 +99,23 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=YUDILOWT
+
+[Document4]
+DocumentPath=PCB_Master_Traffic_Light.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=UJSVXWJT
 
 [Configuration1]
 Name=Sources
