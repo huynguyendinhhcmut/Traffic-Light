@@ -1,0 +1,18 @@
+Removed Pin From Net: NetName=PA11 Pin=SW1-1
+Removed Pin From Net: NetName=PA12 Pin=SW2-1
+Change Component Description : Designator=R7 Old Description=Resistor, Thick Film, Res 4.7 Kilohms, Pwr-Rtg 0.1 W, Tol 1%, SMT, 0603 New Description=Resistor, Thick Film, Res 4.7 Kilohms, Pwr-Rtg 0.1 W, Tol 1%, SMT, 0603 | TE Connectivity CRG0603F4K7
+Added Pin To Net: NetName=PB5 Pin=SW1-1
+Added Pin To Net: NetName=PB5 Pin=U1-41
+Added Net: Name=PB5
+Added Pin To Net: NetName=PB6 Pin=SW2-1
+Added Pin To Net: NetName=PB6 Pin=U1-42
+Added Net: Name=PB6
+Added Pin To Net: NetName=PB7 Pin=SW3-1
+Added Pin To Net: NetName=PB7 Pin=U1-43
+Added Net: Name=PB7
+Added Pin To Net: NetName=PB8 Pin=SW4-1
+Added Pin To Net: NetName=PB8 Pin=U1-45
+Added Net: Name=PB8
+Added Pin To Net: NetName=PB9 Pin=SW5-1
+Added Pin To Net: NetName=PB9 Pin=U1-46
+Added Net: Name=PB9

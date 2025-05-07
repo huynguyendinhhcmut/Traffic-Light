@@ -1,0 +1,13 @@
+Change Component Footprint: Designator=R3 Old Footprint=RESC0603X26N New Footprint=RESC6332X120N
+Change Component Comment : Designator=R3 Old Comment=200 New Comment=3522220RFT
+Change component parameters: Designator = "R3" ("R3"); Footprint = "RESC0603X26N"; UniqueID = "\RRGWQBBB" ("\RRGWQBBB")
+Change component parameters (AddParameter): Name = "Check_prices"; Value = "https://www.snapeda.com/parts/3522220RFT/TE+Connectivity/view-part/?ref=eda"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "EU_RoHS_Compliance"; Value = "Compliant with Exemptions"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "3522220RFT"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "2512"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power_Rating"; Value = "3 W"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Resistance"; Value = "220"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/3522220RFT/TE+Connectivity/view-part/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "1%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"

@@ -1,0 +1,659 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 9em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD25\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">5/7/2025</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">11:16:49 AM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc" class="file"><acronym title="C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc">C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">105</td></tr>
+</table>
+</td>
+</table><a name="IDYXKKB0BURTIGKBFPDRCVWKE0BN2SFNE1RJD4OPNJEPJ0PBQJBFVC"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDF2IJSYAKN1XKGR1VJEFIRMULFJLKKHUE2EU5HJKP3WUSJNZCKOPI">Clearance Constraint (Gap=3.937mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID5LBH2Y5ZUK2TCCXLP1QCHLO35IAJFUETOOYGOMM4ERWRBWC25WGD">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDX1MM0AMJGRKJIV4HJRIK2PUBMMS13WXOYI2GGBEUI2MULDGUUSUM">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDX3UHNX1R10WRO2NEQSAPF5C03PW0UBQDHO1QEPH2OAI0NUWZYJ4N">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDGRZEXEJ0PXF3MZ3FRS51IATMGFXFKIAONHKRZVB0A4E1HXFZUEAE">Width Constraint (Min=9.055mil) (Max=11.811mil) (Preferred=9.842mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID345TQGZNSJCGMUKPFOZIHZLXLECUT20GORTCCGIF1W30SSBNFHUI">Routing Topology Rule(Topology=Shortest) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDRE02RQ0WRSCVIVLW2XSONCIEUFQE2YNRE4RR3MFKIOR3NP5ZR1CP">Power Plane Connect Rule(Relief Connect )(Expansion=20mil) (Conductor Width=10mil) (Air Gap=10mil) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDMSJCF3WDAZURCSIPRWQBEMZX2C1UNYVET2QPCMBA1LDGAFTIHQNF">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDYFYVD2304LRUCBPZE30KPVKZWI00VPV1XUYI2FHAHPABNRV210L">Hole To Hole Clearance (Gap=10mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDU5GLLAQG5M40CWIMQT2XFKFLLFDNWJYSLYGXJYKRUH3BY2NL3MGD">Minimum Solder Mask Sliver (Gap=10mil) (All),(All)</a></td>
+<td class="column2">92</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID20P3AOWTG3TBCQDYOKLDXQ5JQI2VXKMPAR0WZCP32OLHUF1P3YTM">Silk To Solder Mask (Clearance=10mil) (IsPad),(All)</a></td>
+<td class="column2">8</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDCYSGWVYAIHUWLPC1HEY13RR4SODSYI2X5R5YAXIMLNEJDUCSBPUI">Silk to Silk (Clearance=10mil) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDXI0ZVPC3GPJ0I3GFI5RKMBN52GV5A53QMXVCFGCAB1OHW1NZYCOL">Net Antennae (Tolerance=0mil) (All)</a></td>
+<td class="column2">1</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDD0Y5T3K5WBTSOZUC5YGKEYJCONH0QGARDLQ4B2M5GS4ZEK1LPFCO">Height Constraint (Min=0mil) (Max=1000mil) (Prefered=500mil) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">105</td>
+</tr>
+</table><br><a name="IDMSJCF3WDAZURCSIPRWQBEMZX2C1UNYVET2QPCMBA1LDGAFTIHQNF"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Hole Size Constraint (Min=1mil) (Max=100mil) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2912.721mil|Location2.X=3024.208mil|Location1.Y=1048.784mil|Location2.Y=1160.271mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2912.721mil|Location2.X=3024.208mil|Location1.Y=1048.784mil|Location2.Y=1160.271mil|Absolute=True">Hole Size Constraint: (110.236mil &gt; 100mil) Pad U3-(2968.465mil,1104.528mil) on Multi-Layer Actual Hole Size = 110.236mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2912.721mil|Location2.X=3024.208mil|Location1.Y=2269.257mil|Location2.Y=2380.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2912.721mil|Location2.X=3024.208mil|Location1.Y=2269.257mil|Location2.Y=2380.743mil|Absolute=True">Hole Size Constraint: (110.236mil &gt; 100mil) Pad U3-(2968.465mil,2325mil) on Multi-Layer Actual Hole Size = 110.236mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5865.477mil|Location2.X=5976.964mil|Location1.Y=1048.784mil|Location2.Y=1160.271mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5865.477mil|Location2.X=5976.964mil|Location1.Y=1048.784mil|Location2.Y=1160.271mil|Absolute=True">Hole Size Constraint: (110.236mil &gt; 100mil) Pad U3-(5921.221mil,1104.528mil) on Multi-Layer Actual Hole Size = 110.236mil</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5865.477mil|Location2.X=5976.964mil|Location1.Y=2269.257mil|Location2.Y=2380.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5865.477mil|Location2.X=5976.964mil|Location1.Y=2269.257mil|Location2.Y=2380.743mil|Absolute=True">Hole Size Constraint: (110.236mil &gt; 100mil) Pad U3-(5921.221mil,2325mil) on Multi-Layer Actual Hole Size = 110.236mil</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDU5GLLAQG5M40CWIMQT2XFKFLLFDNWJYSLYGXJYKRUH3BY2NL3MGD"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Minimum Solder Mask Sliver (Gap=10mil) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1629.403mil|Location2.X=1640.653mil|Location1.Y=3291.714mil|Location2.Y=3302.964mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1629.403mil|Location2.X=1640.653mil|Location1.Y=3291.714mil|Location2.Y=3302.964mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (7.377mil &lt; 10mil) Between Pad C11-1(1665.354mil,3285mil) on Top Layer And Via (1602.339mil,3297.339mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [7.377mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2088.744mil|Location2.X=2099.994mil|Location1.Y=3152.776mil|Location2.Y=3164.026mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2088.744mil|Location2.X=2099.994mil|Location1.Y=3152.776mil|Location2.Y=3164.026mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (9.371mil &lt; 10mil) Between Pad C13-2(2120.236mil,3195mil) on Top Layer And Via (2090mil,3125mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [9.371mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1817.564mil|Location2.X=1828.814mil|Location1.Y=3684.375mil|Location2.Y=3695.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1817.564mil|Location2.X=1828.814mil|Location1.Y=3684.375mil|Location2.Y=3695.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.055mil &lt; 10mil) Between Pad C4-1(1850.354mil,3685mil) on Top Layer And Via (1793.661mil,3690mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.055mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1844.375mil|Location2.X=1855.625mil|Location1.Y=3713.843mil|Location2.Y=3725.093mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1844.375mil|Location2.X=1855.625mil|Location1.Y=3713.843mil|Location2.Y=3725.093mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (3.063mil &lt; 10mil) Between Pad C4-1(1850.354mil,3685mil) on Top Layer And Via (1850mil,3750mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [3.063mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2115.832mil|Location2.X=2127.082mil|Location1.Y=3679.375mil|Location2.Y=3690.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2115.832mil|Location2.X=2127.082mil|Location1.Y=3679.375mil|Location2.Y=3690.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.055mil &lt; 10mil) Between Pad C5-2(2094.291mil,3685mil) on Top Layer And Via (2150.984mil,3685mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.055mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2176.225mil|Location2.X=2187.475mil|Location1.Y=3679.375mil|Location2.Y=3690.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2176.225mil|Location2.X=2187.475mil|Location1.Y=3679.375mil|Location2.Y=3690.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (3.732mil &lt; 10mil) Between Pad C6-1(2210.354mil,3690mil) on Top Layer And Via (2150.984mil,3685mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [3.732mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1229.115mil|Location2.X=1240.365mil|Location1.Y=3760.005mil|Location2.Y=3771.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1229.115mil|Location2.X=1240.365mil|Location1.Y=3760.005mil|Location2.Y=3771.255mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad J3-1(1265.315mil,3778.425mil) on Top Layer And Pad J3-2(1265.315mil,3752.835mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1229.115mil|Location2.X=1240.365mil|Location1.Y=3734.414mil|Location2.Y=3745.664mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1229.115mil|Location2.X=1240.365mil|Location1.Y=3734.414mil|Location2.Y=3745.664mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad J3-2(1265.315mil,3752.835mil) on Top Layer And Pad J3-3(1265.315mil,3727.244mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1229.115mil|Location2.X=1240.365mil|Location1.Y=3708.824mil|Location2.Y=3720.074mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1229.115mil|Location2.X=1240.365mil|Location1.Y=3708.824mil|Location2.Y=3720.074mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad J3-3(1265.315mil,3727.244mil) on Top Layer And Pad J3-4(1265.315mil,3701.653mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1229.115mil|Location2.X=1240.365mil|Location1.Y=3683.233mil|Location2.Y=3694.483mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1229.115mil|Location2.X=1240.365mil|Location1.Y=3683.233mil|Location2.Y=3694.483mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad J3-4(1265.315mil,3701.653mil) on Top Layer And Pad J3-5(1265.315mil,3676.063mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1130.95mil|Location2.X=1142.2mil|Location1.Y=3815.123mil|Location2.Y=3826.373mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1130.95mil|Location2.X=1142.2mil|Location1.Y=3815.123mil|Location2.Y=3826.373mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (9.717mil &lt; 10mil) Between Pad J3-SH2(1160mil,3774.488mil) on Top Layer And Pad J3-SH6(1160mil,3855.394mil) on Multi-Layer [Top Solder] Mask Sliver [9.717mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1130.95mil|Location2.X=1142.2mil|Location1.Y=3628.115mil|Location2.Y=3639.365mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1130.95mil|Location2.X=1142.2mil|Location1.Y=3628.115mil|Location2.Y=3639.365mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (9.717mil &lt; 10mil) Between Pad J3-SH3(1160mil,3680mil) on Top Layer And Pad J3-SH5(1160mil,3599.095mil) on Multi-Layer [Top Solder] Mask Sliver [9.717mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1756.56mil|Location2.X=1767.81mil|Location1.Y=3684.375mil|Location2.Y=3695.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1756.56mil|Location2.X=1767.81mil|Location1.Y=3684.375mil|Location2.Y=3695.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (4.953mil &lt; 10mil) Between Pad R8-1(1737.598mil,3685mil) on Top Layer And Via (1793.661mil,3690mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [4.953mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2461.712mil|Location2.X=2472.962mil|Location1.Y=2196.092mil|Location2.Y=2207.342mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2461.712mil|Location2.X=2472.962mil|Location1.Y=2196.092mil|Location2.Y=2207.342mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (8.616mil &lt; 10mil) Between Pad SW2-1(2505mil,2167.165mil) on Multi-Layer And Via (2435.06mil,2209.939mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [8.616mil] / [Bottom Solder] Mask Sliver [8.616mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2087.8mil|Location2.X=2099.05mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2087.8mil|Location2.X=2099.05mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-1(2103.268mil,2838.465mil) on Top Layer And Pad U1-2(2083.583mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2110.969mil|Location2.X=2122.219mil|Location1.Y=2852.525mil|Location2.Y=2863.775mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2110.969mil|Location2.X=2122.219mil|Location1.Y=2852.525mil|Location2.Y=2863.775mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (8.811mil &lt; 10mil) Between Pad U1-1(2103.268mil,2838.465mil) on Top Layer And Via (2150mil,2858.15mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [8.811mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1910.635mil|Location2.X=1921.885mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1910.635mil|Location2.X=1921.885mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-10(1926.102mil,2838.465mil) on Top Layer And Pad U1-11(1906.417mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1930.32mil|Location2.X=1941.57mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1930.32mil|Location2.X=1941.57mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-10(1926.102mil,2838.465mil) on Top Layer And Pad U1-9(1945.787mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1890.95mil|Location2.X=1902.2mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1890.95mil|Location2.X=1902.2mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-11(1906.417mil,2838.465mil) on Top Layer And Pad U1-12(1886.732mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2772.8mil|Location2.Y=2784.05mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2772.8mil|Location2.Y=2784.05mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-13(1836.535mil,2788.268mil) on Top Layer And Pad U1-14(1836.535mil,2768.583mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2753.115mil|Location2.Y=2764.365mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2753.115mil|Location2.Y=2764.365mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-14(1836.535mil,2768.583mil) on Top Layer And Pad U1-15(1836.535mil,2748.898mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2733.43mil|Location2.Y=2744.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2733.43mil|Location2.Y=2744.68mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-15(1836.535mil,2748.898mil) on Top Layer And Pad U1-16(1836.535mil,2729.213mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2713.745mil|Location2.Y=2724.995mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2713.745mil|Location2.Y=2724.995mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-16(1836.535mil,2729.213mil) on Top Layer And Pad U1-17(1836.535mil,2709.528mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2694.06mil|Location2.Y=2705.31mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2694.06mil|Location2.Y=2705.31mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-17(1836.535mil,2709.528mil) on Top Layer And Pad U1-18(1836.535mil,2689.843mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2674.375mil|Location2.Y=2685.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2674.375mil|Location2.Y=2685.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-18(1836.535mil,2689.843mil) on Top Layer And Pad U1-19(1836.535mil,2670.157mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1795.562mil|Location2.X=1806.812mil|Location1.Y=2679.178mil|Location2.Y=2690.428mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1795.562mil|Location2.X=1806.812mil|Location1.Y=2679.178mil|Location2.Y=2690.428mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (4.123mil &lt; 10mil) Between Pad U1-18(1836.535mil,2689.843mil) on Top Layer And Via (1773.588mil,2670.551mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [4.123mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2654.69mil|Location2.Y=2665.94mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2654.69mil|Location2.Y=2665.94mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-19(1836.535mil,2670.157mil) on Top Layer And Pad U1-20(1836.535mil,2650.472mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2068.115mil|Location2.X=2079.365mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2068.115mil|Location2.X=2079.365mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-2(2083.583mil,2838.465mil) on Top Layer And Pad U1-3(2063.898mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2635.005mil|Location2.Y=2646.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2635.005mil|Location2.Y=2646.255mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-20(1836.535mil,2650.472mil) on Top Layer And Pad U1-21(1836.535mil,2630.787mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1795.485mil|Location2.X=1806.735mil|Location1.Y=2650.134mil|Location2.Y=2661.384mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1795.485mil|Location2.X=1806.735mil|Location1.Y=2650.134mil|Location2.Y=2661.384mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (4.49mil &lt; 10mil) Between Pad U1-20(1836.535mil,2650.472mil) on Top Layer And Via (1773.588mil,2670.551mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [4.49mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2615.32mil|Location2.Y=2626.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2615.32mil|Location2.Y=2626.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-21(1836.535mil,2630.787mil) on Top Layer And Pad U1-22(1836.535mil,2611.102mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1867.453mil|Location2.X=1878.703mil|Location1.Y=2616.588mil|Location2.Y=2627.838mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1867.453mil|Location2.X=1878.703mil|Location1.Y=2616.588mil|Location2.Y=2627.838mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (9.976mil &lt; 10mil) Between Pad U1-21(1836.535mil,2630.787mil) on Top Layer And Via (1899.839mil,2601.26mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [9.976mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2595.635mil|Location2.Y=2606.885mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2595.635mil|Location2.Y=2606.885mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-22(1836.535mil,2611.102mil) on Top Layer And Pad U1-23(1836.535mil,2591.417mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1865.643mil|Location2.X=1876.893mil|Location1.Y=2603.091mil|Location2.Y=2614.341mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1865.643mil|Location2.X=1876.893mil|Location1.Y=2603.091mil|Location2.Y=2614.341mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.055mil &lt; 10mil) Between Pad U1-22(1836.535mil,2611.102mil) on Top Layer And Via (1899.839mil,2601.26mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.055mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2575.95mil|Location2.Y=2587.2mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1805.32mil|Location2.X=1816.57mil|Location1.Y=2575.95mil|Location2.Y=2587.2mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-23(1836.535mil,2591.417mil) on Top Layer And Pad U1-24(1836.535mil,2571.732mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1865.643mil|Location2.X=1876.893mil|Location1.Y=2588.178mil|Location2.Y=2599.428mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1865.643mil|Location2.X=1876.893mil|Location1.Y=2588.178mil|Location2.Y=2599.428mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.055mil &lt; 10mil) Between Pad U1-23(1836.535mil,2591.417mil) on Top Layer And Via (1899.839mil,2601.26mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.055mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1867.453mil|Location2.X=1878.703mil|Location1.Y=2574.682mil|Location2.Y=2585.932mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1867.453mil|Location2.X=1878.703mil|Location1.Y=2574.682mil|Location2.Y=2585.932mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (9.976mil &lt; 10mil) Between Pad U1-24(1836.535mil,2571.732mil) on Top Layer And Via (1899.839mil,2601.26mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [9.976mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1890.95mil|Location2.X=1902.2mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1890.95mil|Location2.X=1902.2mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-25(1886.732mil,2521.535mil) on Top Layer And Pad U1-26(1906.417mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1910.635mil|Location2.X=1921.885mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1910.635mil|Location2.X=1921.885mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-26(1906.417mil,2521.535mil) on Top Layer And Pad U1-27(1926.102mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1930.32mil|Location2.X=1941.57mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1930.32mil|Location2.X=1941.57mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-27(1926.102mil,2521.535mil) on Top Layer And Pad U1-28(1945.787mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1950.005mil|Location2.X=1961.255mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1950.005mil|Location2.X=1961.255mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-28(1945.787mil,2521.535mil) on Top Layer And Pad U1-29(1965.473mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1946.089mil|Location2.X=1957.339mil|Location1.Y=2478.666mil|Location2.Y=2489.916mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1946.089mil|Location2.X=1957.339mil|Location1.Y=2478.666mil|Location2.Y=2489.916mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (8.307mil &lt; 10mil) Between Pad U1-28(1945.787mil,2521.535mil) on Top Layer And Via (1966.743mil,2454.739mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [8.307mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1969.69mil|Location2.X=1980.94mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1969.69mil|Location2.X=1980.94mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-29(1965.473mil,2521.535mil) on Top Layer And Pad U1-30(1985.158mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1960.173mil|Location2.X=1971.423mil|Location1.Y=2479.752mil|Location2.Y=2491.002mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1960.173mil|Location2.X=1971.423mil|Location1.Y=2479.752mil|Location2.Y=2491.002mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (3.304mil &lt; 10mil) Between Pad U1-29(1965.473mil,2521.535mil) on Top Layer And Via (1966.743mil,2454.739mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [3.304mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2048.43mil|Location2.X=2059.68mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2048.43mil|Location2.X=2059.68mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-3(2063.898mil,2838.465mil) on Top Layer And Pad U1-4(2044.213mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1989.375mil|Location2.X=2000.625mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1989.375mil|Location2.X=2000.625mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-30(1985.158mil,2521.535mil) on Top Layer And Pad U1-31(2004.843mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.421mil|Location2.X=1985.671mil|Location1.Y=2478.883mil|Location2.Y=2490.133mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.421mil|Location2.X=1985.671mil|Location1.Y=2478.883mil|Location2.Y=2490.133mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (7.212mil &lt; 10mil) Between Pad U1-30(1985.158mil,2521.535mil) on Top Layer And Via (1966.743mil,2454.739mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [7.212mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2009.06mil|Location2.X=2020.31mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2009.06mil|Location2.X=2020.31mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-31(2004.843mil,2521.535mil) on Top Layer And Pad U1-32(2024.528mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2028.745mil|Location2.X=2039.995mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2028.745mil|Location2.X=2039.995mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-32(2024.528mil,2521.535mil) on Top Layer And Pad U1-33(2044.213mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2018.76mil|Location2.X=2030.01mil|Location1.Y=2555.399mil|Location2.Y=2566.649mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2018.76mil|Location2.X=2030.01mil|Location1.Y=2555.399mil|Location2.Y=2566.649mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (9.955mil &lt; 10mil) Between Pad U1-32(2024.528mil,2521.535mil) on Top Layer And Via (2024.037mil,2595mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [9.955mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2048.43mil|Location2.X=2059.68mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2048.43mil|Location2.X=2059.68mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-33(2044.213mil,2521.535mil) on Top Layer And Pad U1-34(2063.898mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2068.115mil|Location2.X=2079.365mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2068.115mil|Location2.X=2079.365mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-34(2063.898mil,2521.535mil) on Top Layer And Pad U1-35(2083.583mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2087.8mil|Location2.X=2099.05mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2087.8mil|Location2.X=2099.05mil|Location1.Y=2490.32mil|Location2.Y=2501.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-35(2083.583mil,2521.535mil) on Top Layer And Pad U1-36(2103.268mil,2521.535mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2575.95mil|Location2.Y=2587.2mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2575.95mil|Location2.Y=2587.2mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-37(2153.465mil,2571.732mil) on Top Layer And Pad U1-38(2153.465mil,2591.417mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2595.635mil|Location2.Y=2606.885mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2595.635mil|Location2.Y=2606.885mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-38(2153.465mil,2591.417mil) on Top Layer And Pad U1-39(2153.465mil,2611.102mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2615.32mil|Location2.Y=2626.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2615.32mil|Location2.Y=2626.57mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-39(2153.465mil,2611.102mil) on Top Layer And Pad U1-40(2153.465mil,2630.787mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2028.745mil|Location2.X=2039.995mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2028.745mil|Location2.X=2039.995mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-4(2044.213mil,2838.465mil) on Top Layer And Pad U1-5(2024.528mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2635.005mil|Location2.Y=2646.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2635.005mil|Location2.Y=2646.255mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-40(2153.465mil,2630.787mil) on Top Layer And Pad U1-41(2153.465mil,2650.472mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2654.69mil|Location2.Y=2665.94mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2654.69mil|Location2.Y=2665.94mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-41(2153.465mil,2650.472mil) on Top Layer And Pad U1-42(2153.465mil,2670.157mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2674.375mil|Location2.Y=2685.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2674.375mil|Location2.Y=2685.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-42(2153.465mil,2670.157mil) on Top Layer And Pad U1-43(2153.465mil,2689.843mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2694.06mil|Location2.Y=2705.31mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2694.06mil|Location2.Y=2705.31mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-43(2153.465mil,2689.843mil) on Top Layer And Pad U1-44(2153.465mil,2709.528mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2713.745mil|Location2.Y=2724.995mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2713.745mil|Location2.Y=2724.995mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-44(2153.465mil,2709.528mil) on Top Layer And Pad U1-45(2153.465mil,2729.213mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2733.43mil|Location2.Y=2744.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2733.43mil|Location2.Y=2744.68mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-45(2153.465mil,2729.213mil) on Top Layer And Pad U1-46(2153.465mil,2748.898mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2753.115mil|Location2.Y=2764.365mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2753.115mil|Location2.Y=2764.365mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-46(2153.465mil,2748.898mil) on Top Layer And Pad U1-47(2153.465mil,2768.583mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2772.8mil|Location2.Y=2784.05mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2122.249mil|Location2.X=2133.499mil|Location1.Y=2772.8mil|Location2.Y=2784.05mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-47(2153.465mil,2768.583mil) on Top Layer And Pad U1-48(2153.465mil,2788.268mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2009.06mil|Location2.X=2020.31mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2009.06mil|Location2.X=2020.31mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-5(2024.528mil,2838.465mil) on Top Layer And Pad U1-6(2004.843mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1989.375mil|Location2.X=2000.625mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1989.375mil|Location2.X=2000.625mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-6(2004.843mil,2838.465mil) on Top Layer And Pad U1-7(1985.158mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1969.69mil|Location2.X=1980.94mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1969.69mil|Location2.X=1980.94mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.842mil &lt; 10mil) Between Pad U1-7(1985.158mil,2838.465mil) on Top Layer And Pad U1-8(1965.473mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.842mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.168mil|Location2.X=1985.418mil|Location1.Y=2795.465mil|Location2.Y=2806.715mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.168mil|Location2.X=1985.418mil|Location1.Y=2795.465mil|Location2.Y=2806.715mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (8.052mil &lt; 10mil) Between Pad U1-7(1985.158mil,2838.465mil) on Top Layer And Via (1966.108mil,2771.033mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [8.052mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1950.005mil|Location2.X=1961.255mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1950.005mil|Location2.X=1961.255mil|Location1.Y=2807.249mil|Location2.Y=2818.499mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.843mil &lt; 10mil) Between Pad U1-8(1965.473mil,2838.465mil) on Top Layer And Pad U1-9(1945.787mil,2838.465mil) on Top Layer [Top Solder] Mask Sliver [1.843mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1960.013mil|Location2.X=1971.263mil|Location1.Y=2796.367mil|Location2.Y=2807.617mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1960.013mil|Location2.X=1971.263mil|Location1.Y=2796.367mil|Location2.Y=2807.617mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (3.925mil &lt; 10mil) Between Pad U1-8(1965.473mil,2838.465mil) on Top Layer And Via (1966.108mil,2771.033mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [3.925mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1945.937mil|Location2.X=1957.187mil|Location1.Y=2795.359mil|Location2.Y=2806.609mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1945.937mil|Location2.X=1957.187mil|Location1.Y=2795.359mil|Location2.Y=2806.609mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (8.593mil &lt; 10mil) Between Pad U1-9(1945.787mil,2838.465mil) on Top Layer And Via (1966.108mil,2771.033mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [8.593mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1437.879mil|Location2.X=1449.129mil|Location1.Y=3390.958mil|Location2.Y=3402.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1437.879mil|Location2.X=1449.129mil|Location1.Y=3390.958mil|Location2.Y=3402.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (2.63mil &lt; 10mil) Between Pad U2-1(1462.008mil,3418.032mil) on Top Layer And Pad U2-2(1425mil,3418.032mil) on Top Layer [Top Solder] Mask Sliver [2.63mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1400.871mil|Location2.X=1412.121mil|Location1.Y=3390.958mil|Location2.Y=3402.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1400.871mil|Location2.X=1412.121mil|Location1.Y=3390.958mil|Location2.Y=3402.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (2.63mil &lt; 10mil) Between Pad U2-2(1425mil,3418.032mil) on Top Layer And Pad U2-3(1387.992mil,3418.032mil) on Top Layer [Top Solder] Mask Sliver [2.63mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1744.375mil|Location2.X=1755.625mil|Location1.Y=2980.379mil|Location2.Y=2991.629mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1744.375mil|Location2.X=1755.625mil|Location1.Y=2980.379mil|Location2.Y=2991.629mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (8.26mil &lt; 10mil) Between Pad Y2-2(1783.74mil,3017.756mil) on Top Layer And Via (1750mil,2952.874mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [8.26mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1738.351mil|Location2.X=1749.601mil|Location1.Y=3094.375mil|Location2.Y=3105.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1738.351mil|Location2.X=1749.601mil|Location1.Y=3094.375mil|Location2.Y=3105.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.662mil &lt; 10mil) Between Pad Y2-3(1783.74mil,3112.244mil) on Top Layer And Via (1714.646mil,3100mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [0.662mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1608.251mil|Location2.X=1619.501mil|Location1.Y=3134.808mil|Location2.Y=3146.058mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1608.251mil|Location2.X=1619.501mil|Location1.Y=3134.808mil|Location2.Y=3146.058mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.134mil &lt; 10mil) Between Pad Y2-4(1626.26mil,3112.244mil) on Top Layer And Via (1613.876mil,3170mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.134mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1525.499mil|Location2.X=1536.749mil|Location1.Y=3217.021mil|Location2.Y=3228.271mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1525.499mil|Location2.X=1536.749mil|Location1.Y=3217.021mil|Location2.Y=3228.271mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (6.734mil &lt; 10mil) Between Via (1530.2mil,3255mil) from Top Layer to Bottom Layer And Via (1532.047mil,3190.292mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [6.734mil] / [Bottom Solder] Mask Sliver [6.734mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1540.143mil|Location2.X=1551.393mil|Location1.Y=3376.167mil|Location2.Y=3387.417mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1540.143mil|Location2.X=1551.393mil|Location1.Y=3376.167mil|Location2.Y=3387.417mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (9.411mil &lt; 10mil) Between Via (1540mil,3415mil) from Top Layer to Bottom Layer And Via (1551.537mil,3348.584mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [9.411mil] / [Bottom Solder] Mask Sliver [9.411mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1708.824mil|Location2.X=1720.074mil|Location1.Y=2634.375mil|Location2.Y=2645.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1708.824mil|Location2.X=1720.074mil|Location1.Y=2634.375mil|Location2.Y=2645.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (4.906mil &lt; 10mil) Between Via (1705mil,2670mil) from Top Layer to Bottom Layer And Via (1723.898mil,2610mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [4.906mil] / [Bottom Solder] Mask Sliver [4.906mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1734.375mil|Location2.X=1745.625mil|Location1.Y=3399.375mil|Location2.Y=3410.625mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1734.375mil|Location2.X=1745.625mil|Location1.Y=3399.375mil|Location2.Y=3410.625mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (5.245mil &lt; 10mil) Between Via (1710mil,3415mil) from Top Layer to Bottom Layer And Via (1770mil,3395mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [5.246mil] / [Bottom Solder] Mask Sliver [5.246mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1904.642mil|Location2.X=1915.892mil|Location1.Y=2625.005mil|Location2.Y=2636.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1904.642mil|Location2.X=1915.892mil|Location1.Y=2625.005mil|Location2.Y=2636.255mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (4.333mil &lt; 10mil) Between Via (1899.839mil,2601.26mil) from Top Layer to Bottom Layer And Via (1920.695mil,2660mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [4.333mil] / [Bottom Solder] Mask Sliver [4.333mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1943.239mil|Location2.X=1954.489mil|Location1.Y=2424.616mil|Location2.Y=2435.866mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1943.239mil|Location2.X=1954.489mil|Location1.Y=2424.616mil|Location2.Y=2435.866mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (2.656mil &lt; 10mil) Between Via (1930.986mil,2405.744mil) from Top Layer to Bottom Layer And Via (1966.743mil,2454.739mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [2.656mil] / [Bottom Solder] Mask Sliver [2.656mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1960.754mil|Location2.X=1972.004mil|Location1.Y=1964.806mil|Location2.Y=1976.056mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1960.754mil|Location2.X=1972.004mil|Location1.Y=1964.806mil|Location2.Y=1976.056mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.055mil &lt; 10mil) Between Via (1950mil,1995mil) from Top Layer to Bottom Layer And Via (1982.758mil,1945.863mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.055mil] / [Bottom Solder] Mask Sliver [1.055mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1989.842mil|Location2.X=2001.092mil|Location1.Y=2760.817mil|Location2.Y=2772.067mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1989.842mil|Location2.X=2001.092mil|Location1.Y=2760.817mil|Location2.Y=2772.067mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.433mil &lt; 10mil) Between Via (1966.108mil,2771.033mil) from Top Layer to Bottom Layer And Via (2024.827mil,2761.85mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.433mil] / [Bottom Solder] Mask Sliver [1.433mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2013.883mil|Location2.X=2025.133mil|Location1.Y=2922.565mil|Location2.Y=2933.815mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2013.883mil|Location2.X=2025.133mil|Location1.Y=2922.565mil|Location2.Y=2933.815mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.126mil &lt; 10mil) Between Via (1990mil,2930mil) from Top Layer to Bottom Layer And Via (2049.015mil,2926.381mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.126mil] / [Bottom Solder] Mask Sliver [1.126mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2005.717mil|Location2.X=2016.967mil|Location1.Y=2618.415mil|Location2.Y=2629.665mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2005.717mil|Location2.X=2016.967mil|Location1.Y=2618.415mil|Location2.Y=2629.665mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (5.386mil &lt; 10mil) Between Via (1998.648mil,2653.079mil) from Top Layer to Bottom Layer And Via (2024.037mil,2595mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [5.386mil] / [Bottom Solder] Mask Sliver [5.386mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2025.511mil|Location2.X=2036.761mil|Location1.Y=2640.326mil|Location2.Y=2651.576mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2025.511mil|Location2.X=2036.761mil|Location1.Y=2640.326mil|Location2.Y=2651.576mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (8.521mil &lt; 10mil) Between Via (1998.648mil,2653.079mil) from Top Layer to Bottom Layer And Via (2063.623mil,2638.823mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [8.521mil] / [Bottom Solder] Mask Sliver [8.521mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2038.205mil|Location2.X=2049.455mil|Location1.Y=2611.286mil|Location2.Y=2622.536mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2038.205mil|Location2.X=2049.455mil|Location1.Y=2611.286mil|Location2.Y=2622.536mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.055mil &lt; 10mil) Between Via (2024.037mil,2595mil) from Top Layer to Bottom Layer And Via (2063.623mil,2638.823mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.055mil] / [Bottom Solder] Mask Sliver [1.055mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2090.092mil|Location2.X=2101.342mil|Location1.Y=2380.282mil|Location2.Y=2391.532mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2090.092mil|Location2.X=2101.342mil|Location1.Y=2380.282mil|Location2.Y=2391.532mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.055mil &lt; 10mil) Between Via (2090.672mil,2415mil) from Top Layer to Bottom Layer And Via (2100.762mil,2356.813mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.055mil] / [Bottom Solder] Mask Sliver [1.055mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2298.159mil|Location2.X=2309.409mil|Location1.Y=2842.301mil|Location2.Y=2853.551mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2298.159mil|Location2.X=2309.409mil|Location1.Y=2842.301mil|Location2.Y=2853.551mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.055mil &lt; 10mil) Between Via (2302.361mil,2818.433mil) from Top Layer to Bottom Layer And Via (2305.206mil,2877.42mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.055mil] / [Bottom Solder] Mask Sliver [1.055mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2378.563mil|Location2.X=2389.813mil|Location1.Y=2445.035mil|Location2.Y=2456.285mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2378.563mil|Location2.X=2389.813mil|Location1.Y=2445.035mil|Location2.Y=2456.285mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (1.055mil &lt; 10mil) Between Via (2358.376mil,2436.32mil) from Top Layer to Bottom Layer And Via (2410mil,2465mil) from Top Layer to Bottom Layer [Top Solder] Mask Sliver [1.055mil] / [Bottom Solder] Mask Sliver [1.055mil]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID20P3AOWTG3TBCQDYOKLDXQ5JQI2VXKMPAR0WZCP32OLHUF1P3YTM"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=10mil) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1022.091mil|Location2.X=1033.341mil|Location1.Y=4257.958mil|Location2.Y=4269.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1022.091mil|Location2.X=1033.341mil|Location1.Y=4257.958mil|Location2.Y=4269.208mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.685mil &lt; 10mil) Between Arc (1015mil,4263.583mil) on Top Overlay And Pad SW6-1(1062.047mil,4263.583mil) on Multi-Layer [Top Overlay] to [Top Solder] clearance [9.685mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1473.216mil|Location2.X=1484.466mil|Location1.Y=3419.493mil|Location2.Y=3430.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1473.216mil|Location2.X=1484.466mil|Location1.Y=3419.493mil|Location2.Y=3430.743mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.279mil &lt; 10mil) Between Arc (1487.992mil,3425.118mil) on Top Overlay And Pad U2-1(1462.008mil,3418.032mil) on Top Layer [Top Overlay] to [Top Solder] clearance [7.279mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1875.352mil|Location2.X=1886.602mil|Location1.Y=2967.389mil|Location2.Y=2978.639mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1875.352mil|Location2.X=1886.602mil|Location1.Y=2967.389mil|Location2.Y=2978.639mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (8.067mil &lt; 10mil) Between Pad C15-2(1899.764mil,3005mil) on Top Layer And Text "U1" (1811mil,2904mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [8.067mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2019.414mil|Location2.X=2030.664mil|Location1.Y=3375.477mil|Location2.Y=3386.727mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2019.414mil|Location2.X=2030.664mil|Location1.Y=3375.477mil|Location2.Y=3386.727mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C9-1(2003.386mil,3450mil) on Top Layer And Track (2032.913mil,3381.102mil)(2147.087mil,3381.102mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2019.414mil|Location2.X=2030.664mil|Location1.Y=3513.273mil|Location2.Y=3524.523mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2019.414mil|Location2.X=2030.664mil|Location1.Y=3513.273mil|Location2.Y=3524.523mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C9-1(2003.386mil,3450mil) on Top Layer And Track (2032.913mil,3518.898mil)(2147.087mil,3518.898mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2149.336mil|Location2.X=2160.586mil|Location1.Y=3375.477mil|Location2.Y=3386.727mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2149.336mil|Location2.X=2160.586mil|Location1.Y=3375.477mil|Location2.Y=3386.727mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C9-2(2176.614mil,3450mil) on Top Layer And Track (2032.913mil,3381.102mil)(2147.087mil,3381.102mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2149.336mil|Location2.X=2160.586mil|Location1.Y=3513.273mil|Location2.Y=3524.523mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2149.336mil|Location2.X=2160.586mil|Location1.Y=3513.273mil|Location2.Y=3524.523mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (7.874mil &lt; 10mil) Between Pad C9-2(2176.614mil,3450mil) on Top Layer And Track (2032.913mil,3518.898mil)(2147.087mil,3518.898mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [7.874mil]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1090.586mil|Location2.X=1101.836mil|Location1.Y=4287.288mil|Location2.Y=4298.538mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1090.586mil|Location2.X=1101.836mil|Location1.Y=4287.288mil|Location2.Y=4298.538mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (9.35mil &lt; 10mil) Between Pad SW6-1(1062.047mil,4263.583mil) on Multi-Layer And Track (1103.386mil,4292.913mil)(1280.551mil,4292.913mil) on Top Overlay [Top Overlay] to [Top Solder] clearance [9.35mil]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDXI0ZVPC3GPJ0I3GFI5RKMBN52GV5A53QMXVCFGCAB1OHW1NZYCOL"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Net Antennae (Tolerance=0mil) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1687.5mil|Location2.X=1763.335mil|Location1.Y=2042.5mil|Location2.Y=2164.456mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=C:\Users\khoid\Downloads\Traffic-Light_Final\PCB_Master_Traffic_Light\PCB_Master_Traffic_Light.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1687.5mil|Location2.X=1763.335mil|Location1.Y=2042.5mil|Location2.Y=2164.456mil|Absolute=True">Net Antennae: Via (1720mil,2075mil) from Top Layer to Bottom Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>
