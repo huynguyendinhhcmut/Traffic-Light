@@ -1,0 +1,7 @@
+../Core/Src/HC12.c:17:13:HC12_ModeToStr	6
+../Core/Src/HC12.c:33:11:HC12_StrToMode	6
+../Core/Src/HC12.c:46:6:HC12_SendMode	1
+../Core/Src/HC12.c:56:9:HC12_ReceiveMode	5
+../Core/Src/HC12.c:83:6:HC12_Init	1
+../Core/Src/HC12.c:95:11:HC12_IntReceivedMode	5
+../Core/Src/HC12.c:145:6:HAL_UART_RxCpltCallback	6
