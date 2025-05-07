@@ -1,0 +1,16 @@
+../Core/Src/main.c:114:5:main	8	static
+../Core/Src/main.c:184:6:SystemClock_Config	72	static
+../Core/Src/main.c:221:13:MX_SPI2_Init	8	static
+../Core/Src/main.c:259:13:MX_USART2_UART_Init	8	static
+../Core/Src/main.c:292:13:MX_GPIO_Init	32	static
+../Core/Src/main.c:334:9:isButtonPressed	24	static
+../Core/Src/main.c:355:6:shiftOut	16	static
+../Core/Src/main.c:365:6:displayNumber	24	static
+../Core/Src/main.c:383:6:countDownNum	24	static
+../Core/Src/main.c:395:6:updateState	8	static
+../Core/Src/main.c:417:6:detect_mode	16	static
+../Core/Src/main.c:488:6:switchToLightTrafficMode	16	static
+../Core/Src/main.c:522:6:switchToHeavyTrafficMode	16	static
+../Core/Src/main.c:551:6:switchToNightMode	16	static
+../Core/Src/main.c:570:6:switchToControlMode	16	static
+../Core/Src/main.c:629:6:Error_Handler	4	static,ignoring_inline_asm
