@@ -1,8 +1,0 @@
-Remove Pin=IC1-16 From Net=Out5
-Remove Pin=IC2-16 From Net=Out5
-Remove Pin=U4-19 From Net=Out5
-Add Pin To Net: Pin=IC1-16 Old Net=Out5 New Net=+5V
-Add Pin To Net: Pin=IC2-16 Old Net=Out5 New Net=+5V
-Add Pin To Net: Pin=PS1-6 Old Net=NetPS1_6 New Net=Out5
-Add Pin To Net: Pin=U1-18 Old Net=NetU1_18 New Net=Out5
-Add Pin To Net: Pin=U4-19 Old Net=Out5 New Net=+5V
