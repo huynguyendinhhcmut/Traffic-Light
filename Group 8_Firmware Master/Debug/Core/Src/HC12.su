@@ -1,7 +1,0 @@
-../Core/Src/HC12.c:17:13:HC12_ModeToStr	16	static
-../Core/Src/HC12.c:33:11:HC12_StrToMode	16	static
-../Core/Src/HC12.c:46:6:HC12_SendMode	24	static
-../Core/Src/HC12.c:56:9:HC12_ReceiveMode	56	static
-../Core/Src/HC12.c:83:6:HC12_Init	8	static
-../Core/Src/HC12.c:95:11:HC12_IntReceivedMode	72	static
-../Core/Src/HC12.c:145:6:HAL_UART_RxCpltCallback	16	static
