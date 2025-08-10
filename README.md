@@ -1,4 +1,3 @@
-https://youtu.be/NGnxA5e4aY0
 
 ![image](https://github.com/user-attachments/assets/7b1389a0-d770-4fb6-8a26-8b47a07d0743)
 
